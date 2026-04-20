@@ -2,12 +2,19 @@ import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Square, Loader2 } from 'lucide-react';
+import { Play, Square, Loader2, House, MicVocal, CalendarClock, Mail, Film } from 'lucide-react';
 import bgImage from '../assets/max-van-den-oetelaar-5d5p6_F3haw-unsplash-scaled.jpg';
 import ThreeScene from './ThreeScene';
-import { siteConfig } from '../data/config';
 
-const Hero = ({ isPlaying, streamLoading, onTogglePlay }) => {
+const Hero = ({ isPlaying, streamLoading, onTogglePlay, onJumpToSection, onOpenMedia }) => {
+  const quickLinks = [
+    { label: 'Home', icon: House, onClick: () => onJumpToSection?.('top') },
+    { label: 'Host', icon: MicVocal, onClick: () => onJumpToSection?.('host') },
+    { label: 'Schedule', icon: CalendarClock, onClick: () => onJumpToSection?.('schedule') },
+    { label: 'Contact', icon: Mail, onClick: () => onJumpToSection?.('contact') },
+    { label: 'Media', icon: Film, onClick: () => onOpenMedia?.() },
+  ];
+
   return (
     <section id="top" className="relative w-full min-h-screen flex flex-col justify-center items-center overflow-hidden bg-dark-900 pt-32 pb-10 border-b-4 border-b-soca-red">
       {/* Background Image with Overlay */}
@@ -25,9 +32,8 @@ const Hero = ({ isPlaying, streamLoading, onTogglePlay }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, ease: 'easeOut' }}
         >
-          <span className="text-white block mb-2">{siteConfig.radioName.split(' ')[0]}</span>
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-soca-yellow via-soca-red to-soca-teal block">
-            {siteConfig.radioName.split(' ').slice(1).join(' ')}
+            Caribbean Connection Radio Show
           </span>
         </motion.h1>
 
@@ -37,8 +43,34 @@ const Hero = ({ isPlaying, streamLoading, onTogglePlay }) => {
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 0.3 }}
         >
-          Feel the Carnival Energy. Pure Soca Vibes.
+          The most versatile show on the radio
+          <br />
+          keeping you in touch with your Caribbean heritage.
         </motion.p>
+
+        <motion.div
+          className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 mb-8 w-full max-w-4xl"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.45 }}
+        >
+          {quickLinks.map((item) => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.label}
+                type="button"
+                onClick={item.onClick}
+                className="group rounded-2xl border border-white/20 bg-dark-900/70 hover:bg-dark-800/90 px-4 py-4 md:py-5 text-left transition-all hover:-translate-y-1 hover:border-soca-yellow/80"
+              >
+                <div className="flex items-center gap-3 text-slate-100">
+                  <Icon size={18} className="text-soca-yellow group-hover:text-soca-red transition-colors" />
+                  <span className="font-bold uppercase tracking-wider text-sm md:text-base">{item.label}</span>
+                </div>
+              </button>
+            );
+          })}
+        </motion.div>
         
         {/* Play Button Overlay */}
         <motion.button

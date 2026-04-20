@@ -44,14 +44,14 @@ export const siteConfig = {
   // Weekend Broadcast Schedule
   schedule: {
     saturday: {
-      showName: "Caribbean Connection Saturday",
+      showName: "Saturday Vibes",
       time: "12:00 PM - 3:00 PM EST",
       description: "Get updated and stay connected to what's happening around the Caribbean diaspora. We bring the latest news, cultural tidbits, and pure Soca energy."
     },
     sunday: {
-      showName: "Sunday Smoothies",
+      showName: "Caribbean Jazz Smoothies - The Softer Side of Caribbean Music",
       time: "5:00 PM - 7:00 PM EST",
-      description: "Wind down your weekend with smooth rhythms, relaxing beats, Reggae, and Caribbean Jazz."
+      description: "Wind down your weekend with smooth rhythms of the Caribbean, a touch of jazz-fusion, calypso, reggae, latin and creole vibes."
     }
   },
 

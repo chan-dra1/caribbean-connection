@@ -38,7 +38,7 @@ const Footer = () => {
               <div className="w-1.5 h-1.5 rounded-full bg-soca-yellow" /> Saturday Vibes
             </a>
             <a href="#schedule" className="text-slate-400 hover:text-soca-teal transition-colors font-bold uppercase tracking-wider text-sm flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-soca-teal" /> Sunday Smoothies
+              <div className="w-1.5 h-1.5 rounded-full bg-soca-teal" /> Caribbean Jazz Smoothies
             </a>
             <a href="#host" className="text-slate-400 hover:text-soca-green transition-colors font-bold uppercase tracking-wider text-sm flex items-center gap-2 mt-4">
               Host Spotlight

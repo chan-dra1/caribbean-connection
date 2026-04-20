@@ -1,15 +1,12 @@
 import React, { useState, useRef } from 'react';
 import { MessageCircle } from 'lucide-react';
+import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import DedicationTicker from './components/DedicationTicker';
-import Schedule from './components/Schedule';
-import HostSpotlight from './components/HostSpotlight';
-import News from './components/News';
-import Contact from './components/Contact';
-import Footer from './components/Footer';
 import ChatWidget from './components/ChatWidget';
 import PlayerBar from './components/PlayerBar';
+import HomePage from './pages/HomePage';
+import MediaPage from './pages/MediaPage';
+import NewsPage from './pages/NewsPage';
 import { siteConfig } from './data/config';
 
 function App() {
@@ -55,18 +52,20 @@ function App() {
       <Navbar onOpenChat={() => setIsChatOpen(true)} />
       
       <main id="main-content" tabIndex={-1} className="outline-none">
-      <Hero 
-        isPlaying={isPlaying} 
-        streamLoading={streamLoading} 
-        onTogglePlay={toggleRadio} 
-      />
-
-      <DedicationTicker />
-      <HostSpotlight />
-      <Schedule />
-      <News />
-      <Contact />
-      <Footer />
+        <Routes>
+          <Route
+            path="/"
+            element={(
+              <HomePage
+                isPlaying={isPlaying}
+                streamLoading={streamLoading}
+                onTogglePlay={toggleRadio}
+              />
+            )}
+          />
+          <Route path="/news" element={<NewsPage />} />
+          <Route path="/media" element={<MediaPage />} />
+        </Routes>
       </main>
 
       {/* Floating Action Button for Chat */}
