@@ -113,5 +113,8 @@ export const siteConfig = {
       whatsapp: "https://wa.me/",
       messenger: "https://m.me/",
     },
+    // External Chat / Shoutbox URL (as seen on mrdesmond)
+    // Update this to your specific Sashout/SempMedia URL when ready
+    chatEmbedUrl: "https://www.sempmedia.us/sashout/desoshout/", 
   },
 };

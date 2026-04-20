@@ -23,3 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 .vercel
+
+# Media
+public/media/Nadia-at-One-Fete.mp4
