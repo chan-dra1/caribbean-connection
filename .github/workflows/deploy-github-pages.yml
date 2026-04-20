@@ -24,7 +24,11 @@ jobs:
           node-version: "22"
           cache: npm
       - run: npm ci
-      - run: npm run build
+      - name: Build for GitHub Pages
+        env:
+          # Must match GitHub Pages project path: /<repo>/
+          VITE_BASE_PATH: /${{ github.event.repository.name }}/
+        run: npm run build
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
