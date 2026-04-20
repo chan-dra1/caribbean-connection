@@ -1,4 +1,10 @@
-# React + Vite
+# Caribbean Connection (web)
+
+Vite + React site for the station. **Two laptops, one GitHub repo:** share work with pull / push — see **[COLLABORATION.md](./COLLABORATION.md)** for setup (invite collaborator, clone, daily commands).
+
+---
+
+## React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
