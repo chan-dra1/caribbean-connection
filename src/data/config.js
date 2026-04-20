@@ -104,10 +104,11 @@ export const siteConfig = {
   support: {
     headline: "Support Caribbean Connection",
     subtext: "Help us keep the music, culture, and live programming going every weekend.",
-    zelleLabel: "socachico@gmail.com",
-    zelleLink: "mailto:socachico@gmail.com?subject=Zelle%20Support%20for%20Caribbean%20Connection",
+    zelleLabel: "(305) 527-7664",
+    zelleLink: "tel:+13055277664",
     paypalLink: "https://www.paypal.com/",
-    cashappLink: "https://cash.app/",
+    cashappCashtag: "$heavyrolla",
+    cashappLink: "https://cash.app/$heavyrolla",
     liveChatLinks: {
       whatsapp: "https://wa.me/",
       messenger: "https://m.me/",

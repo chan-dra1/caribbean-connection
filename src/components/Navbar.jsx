@@ -7,8 +7,10 @@ import logoImage from '../assets/cropped-heavy-Rolla-2.png';
 const Navbar = ({ onOpenChat }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [chatMenuOpen, setChatMenuOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+  const supportLinks = siteConfig.support?.liveChatLinks || {};
 
   useEffect(() => {
     const handleScroll = () => {
@@ -88,13 +90,47 @@ const Navbar = ({ onOpenChat }) => {
               Media
             </NavLink>
 
-            <button 
-              type="button"
-              onClick={onOpenChat}
-              className="px-6 py-2 bg-soca-red hover:bg-red-500 text-white font-bold rounded-full transition-transform hover:scale-105 uppercase text-sm tracking-wider shadow-lg shadow-red-500/30"
-            >
-              Live Chat
-            </button>
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => setChatMenuOpen((prev) => !prev)}
+                className="px-6 py-2 bg-soca-red hover:bg-red-500 text-white font-bold rounded-full transition-transform hover:scale-105 uppercase text-sm tracking-wider shadow-lg shadow-red-500/30"
+              >
+                Live Chat
+              </button>
+              {chatMenuOpen && (
+                <div className="absolute right-0 mt-3 w-56 rounded-2xl border border-white/10 bg-dark-900/95 backdrop-blur-xl shadow-2xl p-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onOpenChat();
+                      setChatMenuOpen(false);
+                    }}
+                    className="w-full text-left px-4 py-2 rounded-xl text-slate-100 hover:bg-white/10 font-semibold text-sm"
+                  >
+                    Open Website Chat
+                  </button>
+                  <a
+                    href={supportLinks.whatsapp}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => setChatMenuOpen(false)}
+                    className="block px-4 py-2 rounded-xl text-slate-100 hover:bg-white/10 font-semibold text-sm"
+                  >
+                    WhatsApp
+                  </a>
+                  <a
+                    href={supportLinks.messenger}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => setChatMenuOpen(false)}
+                    className="block px-4 py-2 rounded-xl text-slate-100 hover:bg-white/10 font-semibold text-sm"
+                  >
+                    Messenger
+                  </a>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -140,16 +176,36 @@ const Navbar = ({ onOpenChat }) => {
             >
               Media
             </NavLink>
-            <button 
-              type="button"
-              onClick={() => {
-                onOpenChat();
-                setMobileMenuOpen(false);
-              }}
-              className="w-full py-3 mt-4 bg-soca-red hover:bg-red-500 text-white font-bold rounded-lg uppercase tracking-wider"
-            >
-              Live Chat
-            </button>
+            <div className="pt-2 border-t border-white/10">
+              <button
+                type="button"
+                onClick={() => {
+                  onOpenChat();
+                  setMobileMenuOpen(false);
+                }}
+                className="w-full py-3 bg-soca-red hover:bg-red-500 text-white font-bold rounded-lg uppercase tracking-wider mb-2"
+              >
+                Open Website Chat
+              </button>
+              <a
+                href={supportLinks.whatsapp}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block w-full py-3 text-center bg-green-600 hover:bg-green-500 text-white font-bold rounded-lg uppercase tracking-wider mb-2"
+              >
+                WhatsApp
+              </a>
+              <a
+                href={supportLinks.messenger}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block w-full py-3 text-center bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-lg uppercase tracking-wider"
+              >
+                Messenger
+              </a>
+            </div>
           </div>
         </div>
       )}

@@ -7,7 +7,7 @@ import Contact from '../components/Contact';
 import SupportSection from '../components/SupportSection';
 import Footer from '../components/Footer';
 
-const HomePage = ({ isPlaying, streamLoading, onTogglePlay, onOpenChat }) => {
+const HomePage = ({ isPlaying, streamLoading, onTogglePlay }) => {
   return (
     <>
       <Hero
@@ -19,7 +19,7 @@ const HomePage = ({ isPlaying, streamLoading, onTogglePlay, onOpenChat }) => {
       <HostSpotlight />
       <Schedule />
       <Contact />
-      <SupportSection onOpenChat={onOpenChat} />
+      <SupportSection />
       <Footer />
     </>
   );

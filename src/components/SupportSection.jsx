@@ -1,9 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MessageCircle, HandHeart, Wallet, DollarSign } from 'lucide-react';
+import { HandHeart } from 'lucide-react';
 import { siteConfig } from '../data/config';
 
-const SupportSection = ({ onOpenChat }) => {
+const paymentIconBase = `${import.meta.env.BASE_URL}payment-icons`;
+
+const PaymentBrandIcon = ({ src, title }) => (
+  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/10 p-1.5 ring-1 ring-white/10" title={title}>
+    <img src={src} alt="" className="h-full w-full object-contain brightness-0 invert opacity-95" />
+  </span>
+);
+
+const SupportSection = () => {
   const { support } = siteConfig;
 
   return (
@@ -29,50 +37,10 @@ const SupportSection = ({ onOpenChat }) => {
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="max-w-4xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="rounded-3xl bg-dark-800 border border-white/10 p-8 shadow-2xl"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <MessageCircle className="text-soca-teal" size={24} />
-              <h3 className="text-2xl font-black text-white uppercase tracking-wide">Live Chat</h3>
-            </div>
-            <p className="text-slate-300 mb-6">
-              Join the conversation during the show, send shoutouts, and request your favorite tracks.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <button
-                type="button"
-                onClick={onOpenChat}
-                className="px-5 py-3 bg-soca-red hover:bg-red-500 text-white font-bold rounded-full transition-colors"
-              >
-                Open Website Chat
-              </button>
-              <a
-                href={support.liveChatLinks.whatsapp}
-                target="_blank"
-                rel="noreferrer"
-                className="px-5 py-3 bg-green-600 hover:bg-green-500 text-white font-bold rounded-full transition-colors"
-              >
-                WhatsApp
-              </a>
-              <a
-                href={support.liveChatLinks.messenger}
-                target="_blank"
-                rel="noreferrer"
-                className="px-5 py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-full transition-colors"
-              >
-                Messenger
-              </a>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             className="rounded-3xl bg-dark-800 border border-white/10 p-8 shadow-2xl"
           >
@@ -89,11 +57,11 @@ const SupportSection = ({ onOpenChat }) => {
                 href={support.zelleLink}
                 className="p-4 rounded-2xl border border-white/10 bg-dark-900 hover:border-soca-yellow transition-colors"
               >
-                <div className="flex items-center gap-2 mb-1">
-                  <Wallet className="text-soca-yellow" size={18} />
+                <div className="flex items-center gap-3 mb-2">
+                  <PaymentBrandIcon src={`${paymentIconBase}/zelle.svg`} title="Zelle" />
                   <span className="font-black text-white uppercase text-sm">Zelle</span>
                 </div>
-                <p className="text-slate-300 text-xs break-all">{support.zelleLabel}</p>
+                <p className="text-slate-300 text-xs tracking-wide">{support.zelleLabel}</p>
               </a>
 
               <a
@@ -102,8 +70,8 @@ const SupportSection = ({ onOpenChat }) => {
                 rel="noreferrer"
                 className="p-4 rounded-2xl border border-white/10 bg-dark-900 hover:border-soca-teal transition-colors"
               >
-                <div className="flex items-center gap-2 mb-1">
-                  <DollarSign className="text-soca-teal" size={18} />
+                <div className="flex items-center gap-3 mb-2">
+                  <PaymentBrandIcon src={`${paymentIconBase}/paypal.svg`} title="PayPal" />
                   <span className="font-black text-white uppercase text-sm">PayPal</span>
                 </div>
                 <p className="text-slate-300 text-xs">Send support via PayPal</p>
@@ -115,11 +83,15 @@ const SupportSection = ({ onOpenChat }) => {
                 rel="noreferrer"
                 className="p-4 rounded-2xl border border-white/10 bg-dark-900 hover:border-green-400 transition-colors"
               >
-                <div className="flex items-center gap-2 mb-1">
-                  <DollarSign className="text-green-400" size={18} />
+                <div className="flex items-center gap-3 mb-2">
+                  <PaymentBrandIcon src={`${paymentIconBase}/cashapp.svg`} title="Cash App" />
                   <span className="font-black text-white uppercase text-sm">Cash App</span>
                 </div>
-                <p className="text-slate-300 text-xs">Support with Cash App</p>
+                <p className="text-slate-300 text-xs">
+                  <span className="font-semibold text-green-400">{support.cashappCashtag}</span>
+                  <span className="text-slate-400"> · </span>
+                  Send on Cash App
+                </p>
               </a>
             </div>
           </motion.div>
