@@ -1,8 +1,13 @@
 export const siteConfig = {
   radioName: "Caribbean Connection",
   tagline: "Home of Caribbean Music & Culture",
+  /** Used for HTML meta description and sharing context */
+  siteDescription:
+    "Caribbean Connection — South Florida’s home for Soca, Calypso, Reggae, and Caribbean culture. Listen live, check the weekend lineup, and stay connected.",
   frequency: "104.2 FM",
   streamUrl: "https://s5.citrus3.com:8408/stream",
+  /** Shown in the persistent player when live */
+  liveLineTitle: "LIVE: Caribbean Connection",
   
   // Navigation Links
   links: {
@@ -33,22 +38,58 @@ export const siteConfig = {
     name: "Michael (Mike) Andrews",
     role: "The Voice of the Caribbean",
     bio: "Mike started the “Caribbean Connection Radio Show” in December 1987. A true citizen of the Caribbean and the USA, he delivers the Most Versatile Show on the Radio—a premier musical mix of Soca, Calypso, Reggae, Chutney, Caribbean Jazz, Latin, and French-Caribbean.",
-    image: "/src/assets/heavy-Rolla-1024x1024.png"
+    image: "/heavy-Rolla-1024x1024.png"
   },
 
   // Weekend Broadcast Schedule
   schedule: {
     saturday: {
       showName: "Caribbean Connection Saturday",
-      time: "1:00 PM - 4:00 PM",
+      time: "12:00 PM - 3:00 PM EST",
       description: "Get updated and stay connected to what's happening around the Caribbean diaspora. We bring the latest news, cultural tidbits, and pure Soca energy."
     },
     sunday: {
       showName: "Sunday Smoothies",
-      time: "12:00 PM - 3:00 PM",
+      time: "5:00 PM - 7:00 PM EST",
       description: "Wind down your weekend with smooth rhythms, relaxing beats, Reggae, and Caribbean Jazz."
     }
   },
+
+  // Caribbean news sources (News section)
+  newsLinks: [
+    {
+      title: "Breaking News",
+      source: "News Americas Now",
+      url: "https://www.newsamericasnow.com",
+      icon: "Newspaper",
+      color: "from-soca-red to-orange-500",
+      textColor: "text-soca-red",
+    },
+    {
+      title: "Popular Culture",
+      source: "TV6 TNT",
+      url: "https://www.tv6tnt.com",
+      icon: "Tv",
+      color: "from-soca-yellow to-amber-500",
+      textColor: "text-soca-yellow",
+    },
+    {
+      title: "Business",
+      source: "Guardian TT",
+      url: "https://www.guardian.co.tt",
+      icon: "Briefcase",
+      color: "from-soca-teal to-cyan-500",
+      textColor: "text-soca-teal",
+    },
+    {
+      title: "National Weekly",
+      source: "Caribbean National",
+      url: "https://www.caribbeannationalweekly.com/",
+      icon: "Globe",
+      color: "from-soca-green to-emerald-500",
+      textColor: "text-soca-green",
+    },
+  ],
 
   // Dedication Ticker Phrases
   dedications: [

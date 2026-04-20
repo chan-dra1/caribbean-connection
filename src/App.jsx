@@ -5,6 +5,8 @@ import Hero from './components/Hero';
 import DedicationTicker from './components/DedicationTicker';
 import Schedule from './components/Schedule';
 import HostSpotlight from './components/HostSpotlight';
+import News from './components/News';
+import Contact from './components/Contact';
 import Footer from './components/Footer';
 import ChatWidget from './components/ChatWidget';
 import PlayerBar from './components/PlayerBar';
@@ -35,14 +37,24 @@ function App() {
 
   return (
     <div className="relative w-full min-h-screen bg-dark-900 text-slate-100 overflow-x-hidden font-sans">
+      <a
+        href="#main-content"
+        className="absolute left-[-10000px] top-auto z-[100] h-px w-px overflow-hidden focus:left-4 focus:top-4 focus:m-0 focus:h-auto focus:w-auto focus:overflow-visible focus:rounded-lg focus:bg-soca-yellow focus:px-4 focus:py-2 focus:font-bold focus:text-dark-900 focus:outline focus:outline-2 focus:outline-offset-2 focus:outline-white"
+      >
+        Skip to main content
+      </a>
+
       {/* Global Audio Element */}
       <audio 
         ref={audioRef} 
-        src={siteConfig.streamUrl} 
+        src={siteConfig.streamUrl}
+        playsInline
+        preload="none"
       />
 
       <Navbar onOpenChat={() => setIsChatOpen(true)} />
       
+      <main id="main-content" tabIndex={-1} className="outline-none">
       <Hero 
         isPlaying={isPlaying} 
         streamLoading={streamLoading} 
@@ -52,14 +64,19 @@ function App() {
       <DedicationTicker />
       <HostSpotlight />
       <Schedule />
+      <News />
+      <Contact />
       <Footer />
+      </main>
 
       {/* Floating Action Button for Chat */}
       <button 
+        type="button"
         onClick={() => setIsChatOpen(true)}
+        aria-label="Open live chat"
         className={`fixed bottom-24 right-6 w-14 h-14 bg-soca-red hover:bg-red-500 rounded-full flex items-center justify-center text-white shadow-[0_0_20px_rgba(239,68,68,0.4)] z-40 transition-transform ${isChatOpen ? 'scale-0' : 'scale-100'}`}
       >
-        <MessageCircle size={24} />
+        <MessageCircle size={24} aria-hidden />
       </button>
 
       {/* Slide-out Chat Widget */}

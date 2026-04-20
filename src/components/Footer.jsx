@@ -4,7 +4,7 @@ import { siteConfig } from '../data/config';
 
 const Footer = () => {
   return (
-    <footer className="bg-dark-950 pt-20 pb-36 px-4 border-t-2 border-white/5 relative z-10" id="contact">
+    <footer className="bg-dark-950 pt-20 pb-36 px-4 border-t-2 border-white/5 relative z-10" id="footer">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 mb-16">
         
         {/* Column 1: Brand & About */}

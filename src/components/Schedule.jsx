@@ -18,25 +18,95 @@ const cardVariants = {
   visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
 };
 
-// Simple pseudo-countdown hook for presentation (resets visually)
+// Calculate seconds until the next show in EST
+const getNextShowSeconds = () => {
+  const now = new Date();
+  
+  // Get components of current time in America/New_York
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    hour12: false,
+    weekday: 'short',
+    year: 'numeric', month: 'numeric', day: 'numeric',
+    hour: 'numeric', minute: 'numeric', second: 'numeric'
+  });
+
+  const parts = formatter.formatToParts(now).reduce((acc, part) => {
+    acc[part.type] = part.value;
+    return acc;
+  }, {});
+
+  // Create a Date object that "looks" like the current time in EST
+  // This is for easier comparison logic (math stays consistent)
+  const estNow = new Date(
+    parseInt(parts.year),
+    parseInt(parts.month) - 1,
+    parseInt(parts.day),
+    parseInt(parts.hour),
+    parseInt(parts.minute),
+    parseInt(parts.second)
+  );
+  
+  const day = estNow.getDay();
+  const hour = estNow.getHours();
+  
+  let target = new Date(estNow);
+  target.setMinutes(0, 0, 0);
+  
+  // SATURDAY: 12 PM - 3 PM (12:00 - 15:00)
+  // SUNDAY: 5 PM - 7 PM (17:00 - 19:00)
+
+  if (day === 6) { // Saturday
+    if (hour < 12) {
+      target.setHours(12);
+    } else if (hour >= 12 && hour < 15) {
+      return 0; // LIVE
+    } else {
+      // It's after 3 PM Sat -> Next target is Sunday 5 PM
+      target.setDate(target.getDate() + 1);
+      target.setHours(17);
+    }
+  } else if (day === 0) { // Sunday
+    if (hour < 17) {
+      target.setHours(17);
+    } else if (hour >= 17 && hour < 19) {
+      return 0; // LIVE
+    } else {
+      // It's after 7 PM Sun -> Next target is next Saturday 12 PM
+      target.setDate(target.getDate() + 6);
+      target.setHours(12);
+    }
+  } else { // Monday - Friday
+    const daysToSaturday = (6 - day + 7) % 7;
+    target.setDate(target.getDate() + daysToSaturday);
+    target.setHours(12);
+  }
+  
+  return Math.max(0, Math.floor((target.getTime() - estNow.getTime()) / 1000));
+};
+
 const useCountdown = () => {
-  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0 });
+  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0, isLive: false });
 
   useEffect(() => {
-    // In a real app, this would calculate time until the next Saturday/Sunday 1PM EST.
-    // Assuming 5 hours randomly for demo aesthetic.
-    let totalSeconds = 5 * 3600 + 45 * 60 + 30;
-
-    const interval = setInterval(() => {
-      totalSeconds -= 1;
-      if (totalSeconds < 0) totalSeconds = 7 * 24 * 3600; // Reset
+    const updateTimer = () => {
+      const totalSeconds = getNextShowSeconds();
       
-      const hours = Math.floor(totalSeconds / 3600) % 24;
-      const minutes = Math.floor(totalSeconds / 60) % 60;
+      if (totalSeconds === 0) {
+        setTimeLeft({ hours: 0, minutes: 0, seconds: 0, isLive: true });
+        return;
+      }
+      
+      // Calculate days to display correctly in hours if > 24
+      const hours = Math.floor(totalSeconds / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
       const seconds = totalSeconds % 60;
       
-      setTimeLeft({ hours, minutes, seconds });
-    }, 1000);
+      setTimeLeft({ hours, minutes, seconds, isLive: false });
+    };
+
+    updateTimer(); // Initial call
+    const interval = setInterval(updateTimer, 1000);
 
     return () => clearInterval(interval);
   }, []);
@@ -87,31 +157,44 @@ const Schedule = () => {
             viewport={{ once: true }}
             className="flex items-center gap-4 bg-dark-800 p-4 rounded-2xl border border-white/10 shadow-2xl"
           >
-            <div className="flex items-center justify-center w-12 h-12 bg-soca-red rounded-full shadow-[0_0_15px_rgba(239,68,68,0.5)]">
-              <Timer className="text-white" size={24} />
-            </div>
-            <div className="flex gap-4 text-center">
-              <div>
-                <div className="text-3xl font-black font-mono text-soca-yellow tracking-tighter">
-                  {String(timeLeft.hours).padStart(2, '0')}
+            {timeLeft.isLive ? (
+              <div className="flex items-center justify-center gap-4 px-2 py-1">
+                <div className="flex items-center justify-center w-12 h-12 bg-soca-red rounded-full shadow-[0_0_20px_rgba(239,68,68,0.8)] animate-pulse">
+                  <Music className="text-white" size={24} />
                 </div>
-                <div className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Hrs</div>
-              </div>
-              <div className="text-3xl font-black text-slate-700">:</div>
-              <div>
-                <div className="text-3xl font-black font-mono text-soca-yellow tracking-tighter">
-                  {String(timeLeft.minutes).padStart(2, '0')}
+                <div className="text-3xl md:text-4xl font-black font-mono text-soca-red tracking-tighter uppercase animate-pulse">
+                  LIVE NOW
                 </div>
-                <div className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Min</div>
               </div>
-              <div className="text-3xl font-black text-slate-700">:</div>
-              <div className="w-12 text-left">
-                <div className="text-3xl font-black font-mono text-soca-red tracking-tighter">
-                  {String(timeLeft.seconds).padStart(2, '0')}
+            ) : (
+              <>
+                <div className="flex items-center justify-center w-12 h-12 bg-soca-red rounded-full shadow-[0_0_15px_rgba(239,68,68,0.5)]">
+                  <Timer className="text-white" size={24} />
                 </div>
-                <div className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Sec</div>
-              </div>
-            </div>
+                <div className="flex gap-4 text-center">
+                  <div>
+                    <div className="text-3xl font-black font-mono text-soca-yellow tracking-tighter">
+                      {String(timeLeft.hours).padStart(2, '0')}
+                    </div>
+                    <div className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Hrs</div>
+                  </div>
+                  <div className="text-3xl font-black text-slate-700">:</div>
+                  <div>
+                    <div className="text-3xl font-black font-mono text-soca-yellow tracking-tighter">
+                      {String(timeLeft.minutes).padStart(2, '0')}
+                    </div>
+                    <div className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Min</div>
+                  </div>
+                  <div className="text-3xl font-black text-slate-700">:</div>
+                  <div className="w-12 text-left">
+                    <div className="text-3xl font-black font-mono text-soca-red tracking-tighter">
+                      {String(timeLeft.seconds).padStart(2, '0')}
+                    </div>
+                    <div className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Sec</div>
+                  </div>
+                </div>
+              </>
+            )}
           </motion.div>
         </div>
 

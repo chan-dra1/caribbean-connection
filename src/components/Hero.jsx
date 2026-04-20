@@ -9,7 +9,7 @@ import { siteConfig } from '../data/config';
 
 const Hero = ({ isPlaying, streamLoading, onTogglePlay }) => {
   return (
-    <section className="relative w-full min-h-screen flex flex-col justify-center items-center overflow-hidden bg-dark-900 pt-32 pb-10 border-b-4 border-b-soca-red">
+    <section id="top" className="relative w-full min-h-screen flex flex-col justify-center items-center overflow-hidden bg-dark-900 pt-32 pb-10 border-b-4 border-b-soca-red">
       {/* Background Image with Overlay */}
       <div 
         className="absolute inset-0 z-0 opacity-20 bg-cover bg-center h-full"
@@ -42,7 +42,10 @@ const Hero = ({ isPlaying, streamLoading, onTogglePlay }) => {
         
         {/* Play Button Overlay */}
         <motion.button
+          type="button"
           onClick={onTogglePlay}
+          aria-pressed={isPlaying}
+          aria-label={streamLoading ? 'Connecting to live stream' : isPlaying ? 'Pause live stream' : 'Play live stream'}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           initial={{ opacity: 0, y: 20 }}
@@ -72,15 +75,15 @@ const Hero = ({ isPlaying, streamLoading, onTogglePlay }) => {
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 1.5, ease: 'easeOut' }}
-        className="relative z-10 w-full h-[40vh] md:h-[50vh] cursor-grab active:cursor-grabbing"
+        className="relative z-10 w-full h-[50vh] md:h-[60vh] cursor-grab active:cursor-grabbing"
       >
-        <Canvas shadows camera={{ position: [0, 2, 8], fov: 45 }}>
+        <Canvas shadows camera={{ position: [0, 1.5, 9], fov: 45 }}>
           <ambientLight intensity={1.5} />
           <spotLight position={[10, 20, 10]} angle={0.2} penumbra={1} intensity={2} castShadow color="#fbbf24" />
           <spotLight position={[-10, 10, -10]} angle={0.2} penumbra={1} intensity={1} color="#ef4444" />
           <Environment preset="night" />
           
-          <ThreeScene playing={isPlaying} />
+          <ThreeScene playing={isPlaying} onTogglePlay={onTogglePlay} />
           <ContactShadows position={[0, -2, 0]} opacity={0.5} scale={10} blur={2} far={4} color="#10b981" />
 
           <OrbitControls 

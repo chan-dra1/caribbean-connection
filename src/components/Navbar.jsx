@@ -15,9 +15,11 @@ const Navbar = ({ onOpenChat }) => {
   }, []);
 
   const navLinks = [
-    { label: "Home", href: "#" },
-    { label: "Host Spotlight", href: "#host" },
+    { label: "Home", href: "#top" },
+    { label: "Host", href: "#host" },
     { label: "Schedule", href: "#schedule" },
+    { label: "News", href: "#news" },
+    { label: "Contact", href: "#contact" },
   ];
 
   return (

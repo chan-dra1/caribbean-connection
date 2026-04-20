@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Send, User, MessageCircle, MoreVertical, X } from 'lucide-react';
 
+const CHAT_USERNAME_KEY = 'caribbean-connection-chat-username';
+
 const INITIAL_MESSAGES = [
   { id: 1, user: 'RadioHost', text: 'Welcome to the live show! What are we listening to today?', isHost: true },
   { id: 2, user: 'IslandVibes99', text: 'Play some old school reggae please!', isHost: false },
@@ -14,6 +16,18 @@ const ChatWidget = ({ isOpen, onClose }) => {
   const [username, setUsername] = useState('');
   const [hasSetUsername, setHasSetUsername] = useState(false);
   const scrollRef = useRef(null);
+
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem(CHAT_USERNAME_KEY);
+      if (saved?.trim()) {
+        setUsername(saved.trim());
+        setHasSetUsername(true);
+      }
+    } catch {
+      /* sessionStorage unavailable */
+    }
+  }, []);
 
   // Auto-scroll to bottom on new message
   useEffect(() => {
@@ -39,7 +53,13 @@ const ChatWidget = ({ isOpen, onClose }) => {
 
   const joinChat = (e) => {
     e.preventDefault();
-    if (username.trim()) {
+    const name = username.trim();
+    if (name) {
+      try {
+        sessionStorage.setItem(CHAT_USERNAME_KEY, name);
+      } catch {
+        /* ignore */
+      }
       setHasSetUsername(true);
     }
   };
