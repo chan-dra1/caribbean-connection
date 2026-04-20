@@ -98,5 +98,19 @@ export const siteConfig = {
     "Sending love back to Trinidad & Tobago! 🇹🇹",
     "Turn it up! Nothing but pure Soca vibes today! 🎶",
     "Caribbean Connection locked in from New York! 🗽"
-  ]
+  ],
+
+  // Live chat + donations
+  support: {
+    headline: "Support Caribbean Connection",
+    subtext: "Help us keep the music, culture, and live programming going every weekend.",
+    zelleLabel: "socachico@gmail.com",
+    zelleLink: "mailto:socachico@gmail.com?subject=Zelle%20Support%20for%20Caribbean%20Connection",
+    paypalLink: "https://www.paypal.com/",
+    cashappLink: "https://cash.app/",
+    liveChatLinks: {
+      whatsapp: "https://wa.me/",
+      messenger: "https://m.me/",
+    },
+  },
 };

@@ -1,31 +1,38 @@
 import React from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Play, Square, Loader2, House, MicVocal, CalendarClock, Mail, Film } from 'lucide-react';
-import bgImage from '../assets/max-van-den-oetelaar-5d5p6_F3haw-unsplash-scaled.jpg';
+import { motion } from 'framer-motion';
+import { Play, Square, Loader2 } from 'lucide-react';
+import bgImage from '../assets/home-main-bg.png';
+import logoBadgeImage from '../assets/hero-badge-replacement.png';
 import ThreeScene from './ThreeScene';
 
-const Hero = ({ isPlaying, streamLoading, onTogglePlay, onJumpToSection, onOpenMedia }) => {
-  const quickLinks = [
-    { label: 'Home', icon: House, onClick: () => onJumpToSection?.('top') },
-    { label: 'Host', icon: MicVocal, onClick: () => onJumpToSection?.('host') },
-    { label: 'Schedule', icon: CalendarClock, onClick: () => onJumpToSection?.('schedule') },
-    { label: 'Contact', icon: Mail, onClick: () => onJumpToSection?.('contact') },
-    { label: 'Media', icon: Film, onClick: () => onOpenMedia?.() },
-  ];
-
+const Hero = ({ isPlaying, streamLoading, onTogglePlay }) => {
   return (
     <section id="top" className="relative w-full min-h-screen flex flex-col justify-center items-center overflow-hidden bg-dark-900 pt-32 pb-10 border-b-4 border-b-soca-red">
       {/* Background Image with Overlay */}
-      <div 
-        className="absolute inset-0 z-0 opacity-20 bg-cover bg-center h-full"
+      <div
+        className="absolute inset-0 z-0 opacity-70 bg-cover bg-center h-full"
         style={{ backgroundImage: `url(${bgImage})` }}
       />
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-dark-900/60 via-dark-900/80 to-dark-900" />
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-dark-900/25 via-dark-900/45 to-dark-900/70" />
+
+      {/* Branded circular logo badge inspired by reference */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.92, y: 24 }}
+        animate={{ opacity: 1, scale: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.35 }}
+        className="absolute z-10 left-4 md:left-10 bottom-8 md:bottom-12"
+      >
+        <img
+          src={logoBadgeImage}
+          alt="Caribbean Connection badge"
+          className="w-40 sm:w-52 md:w-72 rounded-2xl border-2 border-soca-yellow/80 shadow-[0_0_50px_rgba(0,0,0,0.55)]"
+        />
+      </motion.div>
 
       {/* Content Header */}
-      <div className="relative z-10 flex flex-col items-center text-center px-4 max-w-5xl mx-auto mb-2">
+      <div className="relative z-20 flex flex-col items-center text-center px-4 max-w-5xl mx-auto mb-2">
         <motion.h1 
           className="text-5xl md:text-8xl font-black tracking-tighter mb-4 uppercase drop-shadow-[0_10px_20px_rgba(0,0,0,0.8)]"
           initial={{ opacity: 0, y: -20 }}
@@ -48,30 +55,6 @@ const Hero = ({ isPlaying, streamLoading, onTogglePlay, onJumpToSection, onOpenM
           keeping you in touch with your Caribbean heritage.
         </motion.p>
 
-        <motion.div
-          className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 mb-8 w-full max-w-4xl"
-          initial={{ opacity: 0, y: 18 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.45 }}
-        >
-          {quickLinks.map((item) => {
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.label}
-                type="button"
-                onClick={item.onClick}
-                className="group rounded-2xl border border-white/20 bg-dark-900/70 hover:bg-dark-800/90 px-4 py-4 md:py-5 text-left transition-all hover:-translate-y-1 hover:border-soca-yellow/80"
-              >
-                <div className="flex items-center gap-3 text-slate-100">
-                  <Icon size={18} className="text-soca-yellow group-hover:text-soca-red transition-colors" />
-                  <span className="font-bold uppercase tracking-wider text-sm md:text-base">{item.label}</span>
-                </div>
-              </button>
-            );
-          })}
-        </motion.div>
-        
         {/* Play Button Overlay */}
         <motion.button
           type="button"

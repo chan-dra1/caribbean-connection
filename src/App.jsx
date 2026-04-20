@@ -60,6 +60,7 @@ function App() {
                 isPlaying={isPlaying}
                 streamLoading={streamLoading}
                 onTogglePlay={toggleRadio}
+                onOpenChat={() => setIsChatOpen(true)}
               />
             )}
           />
